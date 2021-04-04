@@ -113,7 +113,7 @@ function Features = getFeatures(method, i, xtrain, xtest, ytrain, ytest)
 
 end
 
-%Parçacık Sürü Optimizasyonu%
+%PSO%
 function [Sf,Nf,curve] = binaryPSO(xtrain, xtest, ytrain, ytest, max_Iter)
     N = 30; 
     c1       = 2; 
@@ -122,26 +122,6 @@ function [Sf,Nf,curve] = binaryPSO(xtrain, xtest, ytrain, ytest, max_Iter)
       max_Iter = 20;
     end
     [Sf,Nf,curve] = jBPSO(xtrain, xtest, ytrain, ytest, N, max_Iter,c1,c2);
-end
-
-%Genetik Optimizasyon%
-function [Sf,Nf,curve] = GA1(xtrain, xtest, ytrain, ytest)
-    % Parameter setting
-    N        = 10;
-    max_Iter = 20;
-    CR       = 0.8;
-    MR       = 0.3; 
-    % Genetic Algorithm
-    [Sf,Nf,curve] = jGA1(xtrain, xtest, ytrain, ytest,N,max_Iter,CR,MR); 
-end
-
-%Whale Optimization Algorithm for Feature Selection%
-function [Sf,Nf,curve] = WOA(xtrain, xtest, ytrain, ytest)
-    % Parameter setting
-    N        = 10; 
-    max_Iter = 100; 
-    % Genetic Algorithm
-    [Sf,Nf,curve] = jWOA(xtrain, xtest, ytrain, ytest,N,max_Iter); 
 end
 
 function HOGFeatures = getHOGFeatures(files)
