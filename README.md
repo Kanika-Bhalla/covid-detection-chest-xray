@@ -6,7 +6,7 @@
 
 [Download extracted features mat file](https://drive.google.com/file/d/1AVN66IRWoiiemjmnTSOTG6HhNRq0bnUx/view?usp=sharing)
 
-**Running Steps:
+**Running Steps:**
 
 1) The original data directory should be as follows
 ```
