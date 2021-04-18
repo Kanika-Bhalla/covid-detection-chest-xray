@@ -6,7 +6,9 @@
 
 [Download extracted features mat file](https://drive.google.com/file/d/1AVN66IRWoiiemjmnTSOTG6HhNRq0bnUx/view?usp=sharing)
 
-The original data directory should be as follows
+**Running Steps:
+
+1) The original data directory should be as follows
 ```
 data_original
   |--- covid
@@ -19,3 +21,6 @@ data_original
          |--- pneumo_img1.png
          |--- .....
 ```
+
+2) Place the prepared image directory into the ```src``` directory
+3) Run ```src/Main.m```  file
