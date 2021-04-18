@@ -1,4 +1,4 @@
-# covid-detection-chest-xray
+# Covid Detection Using Chest X-Ray Images
 
 [Download original image dataset](https://drive.google.com/file/d/13jZ3cJLCNJoQ-YuoZwB-z3I6NKEiXloq/view?usp=sharing)
 
