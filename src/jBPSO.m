@@ -47,7 +47,6 @@ while t <= max_Iter
     end
     outParfeval(i) = parfeval(fun,1,featTrain,labelTrain,X(i,:));
     fit(i) = fetchOutputs(outParfeval(i));
-    %fit(i) = fun(featTrain,labelTrain,X(i,:));
     if fit(i) < fitP(i)
       Xpb(i,:) = X(i,:);
       fitP(i)  = fit(i);

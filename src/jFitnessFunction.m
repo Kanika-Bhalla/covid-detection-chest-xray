@@ -9,7 +9,7 @@ function cost = jFitnessFunction(feat, label, X)
 end
 
 function error = jwrapperSVM(feat, label)
-  acc = svmClassifier(feat, label, 3, 0);
+  acc = svmClassifier(feat, label, 5, 0);
   error = 1 - acc;
 end
 

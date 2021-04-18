@@ -10,6 +10,10 @@ if ismatrix(I)
 end
 
 I = imreducehaze(I);
-Iout = imresize(I, [299 299]);
+
+[rows, columns, numberOfColorChannels] = size(I);
+if rows ~= 299 || columns ~= 299
+    Iout = imresize(I, [299 299]);
+end
 
 end
