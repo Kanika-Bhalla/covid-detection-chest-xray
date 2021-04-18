@@ -9,7 +9,9 @@
 The original data directory should be as follows
 
 data_original
+
   |--- covid
+  
          |--- covid_img1.png
          |--- ....
   |--- normal
