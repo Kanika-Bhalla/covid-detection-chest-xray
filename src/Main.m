@@ -1,7 +1,6 @@
-%% (1) Convolutional Neural Network with one convolutional layer
+%% 
 clc, clear
-% Benchmark dataset
-suffix = "stretchlim";
+suffix = "imreducehaze";
 rootFolder = fullfile(strcat('./data_', suffix, '/'));
 categories = {'covid', 'normal', 'pneumo'};
 
@@ -9,10 +8,10 @@ categories = {'covid', 'normal', 'pneumo'};
 imds = imageDatastore(fullfile(rootFolder, categories), 'LabelSource', 'foldernames');
 imds.ReadFcn = @(filename)readAndPreprocessImage(filename);
 
-% Convolutional Neural Network
-CNN = jCNN(imds, imds.Labels, suffix);
+matFile = "features.mat";
 
-% Accuracy
-accuray = CNN.acc;
-% Confusion matrix
-confmat = CNN.con;
+% extract features and save mat file
+extractFeatureAndSaveFile(imds, imds.Labels, suffix, matFile);
+
+% select features with PSO
+selectFeatureAndSaveFile(matFile)

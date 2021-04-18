@@ -1,4 +1,4 @@
-function CNN = jCNN(imgs,label, suffix)
+function CNN = jFeatureExtraction(imgs,label, suffix)
 kfoldCount = 5;
 fold    = cvpartition(label,'kfold',kfoldCount);
 Afold   = zeros(kfoldCount,1); 
@@ -22,56 +22,12 @@ else
 end
 
 saveMatFile(matFile, strcat("LBP_",suffix), getLBPFeatures(imgs.Files));
+saveMatFile(matFile, strcat("Densenet201_",suffix), activations(densenet201,imgs,'avg_pool','OutputAs', 'rows'));
+
 %saveMatFile(matFile, strcat("HOG_",suffix), getHOGFeatures(imgs.Files));
 %saveMatFile(matFile, strcat("Mobilenetv2_",suffix), activations(mobilenetv2,imgs,'Logits','OutputAs', 'rows'));
-saveMatFile(matFile, strcat("Densenet201_",suffix), activations(densenet201,imgs,'avg_pool','OutputAs', 'rows'));
 %saveMatFile(matFile, strcat("Resnet18_",suffix), activations(resnet18,imgs,'pool5','OutputAs', 'rows'));
 
-for i = 1:kfoldCount
-  disp([num2str(i),' başladı.'])
-  key = strcat("idx_", num2str(i));
-  train_idx = kfold.kfold.(key).train;
-  test_idx   = kfold.kfold.(key).test;
-  
-  xtrain = subset(imgs, train_idx);
-  ytrain = label(train_idx);
-  xtest = subset(imgs, test_idx);
-  ytest = label(test_idx);
-  
-  featLBP = getFeatures("LBP", i, xtrain, xtest, ytrain, ytest);
-  %featHOG = getFeatures("HOG", i, xtrain, xtest, ytrain, ytest);
-  %featDensenet201 = getFeatures("densenet201", i, xtrain, xtest, ytrain, ytest);
-  %featResnet18 = getFeatures("resnet18", i, xtrain, xtest, ytrain, ytest);
-  %featMobilenetv2 = getFeatures("mobilenetv2", i, xtrain, xtest, ytrain, ytest);
-  
-  %featTrain = [featHOG.train(:,featHOG.Sf)];
-  %featTest = [featHOG.test(:,featHOG.Sf)];
-  %[Sf,Nf,curve] = binaryPSO(featTrain, featTest, ytrain, ytest, 10);
-  featTrain = featLBP.train(:,featLBP.Sf);
-  featTest = featLBP.test(:,featLBP.Sf);
-  
-  Pred = predictWithSVM(featTrain, ytrain, featTest);
-  
-  con        = confusionmat(ytest,Pred);
-  confmat    = confmat + con; 
-  Afold(i,1) = sum(diag(con)) / sum(con(:));
-  disp([num2str(i),' bitti. Acc:', num2str(Afold(i,1))])
-end
-
-Acc  = mean(Afold);
-time = toc;
-
-CNN.acc = Acc; 
-CNN.con = confmat;
-CNN.t   = time;
-
-fprintf('\n Classification Accuracy (CNN): %g %% \n ',100* Acc);
-end
-
-function Pred = predictWithSVM(featuresTrain, ytrain, featuresTest)
-  t = templateSVM('SaveSupportVectors',true, 'KernelFunction','rbf', 'BoxConstraint', 100);
-  classifier = fitcecoc(featuresTrain,ytrain, 'Learners', t, 'Coding', 'onevsall', 'ObservationsIn', 'rows');
-  Pred = predict(classifier,featuresTest);
 end
 
 function [featuresTrain, featuresTest] = getFeaturesFromModel(net, layer, xtrain, xtest)
