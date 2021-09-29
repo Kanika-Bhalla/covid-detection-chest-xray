@@ -27,3 +27,7 @@ data_original
 
 2) Place the prepared image directory into the ```src``` directory
 3) Run ```src/Main.m```  file
+
+**Proposed Model**
+
+<img width="666" alt="Proposed Model" src="https://user-images.githubusercontent.com/1481904/135340425-730238bb-8f24-4dbc-8cf2-d05938a82b77.png">
